@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/reddit_clone
+    username: ${DB_USERNAME:reddit_user}
+    password: ${DB_PASSWORD:reddit_pass}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    root: INFO
+    com.demo.reddit: INFO
