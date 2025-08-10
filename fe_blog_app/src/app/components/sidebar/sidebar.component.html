@@ -1,0 +1,86 @@
+<div class="sidebar">
+  <div class="welcome-card">
+    <div class="welcome-header">
+      <div class="home-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </div>
+      <div class="welcome-text">
+        <h3>Welcome Home</h3>
+        <p>Your personal Spring Reddit frontpage. Discover amazing content from communities you love.</p>
+      </div>
+    </div>
+    
+    <div class="action-buttons">
+      <button class="btn btn-primary btn-full" (click)="navigateToCreatePost()">
+        + CREATE POST
+      </button>
+      <button class="btn btn-outline btn-full" (click)="navigateToCreateSubreddit()">
+        + CREATE COMMUNITY
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-card">
+    <div class="stats-header">
+      <div class="home-icon-small">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </div>
+      <span>Home</span>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">1.2M</div>
+        <div class="stat-label">MEMBERS</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-number">5.6k</div>
+        <div class="stat-label">ONLINE</div>
+        <div class="online-indicator"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trending-card">
+    <div class="trending-header">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+      </svg>
+      <span>Trending Communities</span>
+    </div>
+    
+    <div class="communities-list">
+      <div 
+        *ngFor="let subreddit of subreddits | slice:0:4; let i = index" 
+        class="community-item"
+        (click)="navigateToSubreddit(subreddit.name)"
+      >
+        <div class="community-rank">{{ i + 1 }}</div>
+        <div class="community-icon" [style.background-color]="getCommunityColor(i)">
+          {{ subreddit.name.charAt(0).toUpperCase() }}
+        </div>
+        <div class="community-info">
+          <div class="community-name">r/{{ subreddit.name }}</div>
+          <div class="community-members">{{ getCommunityMemberCount(i) }} members</div>
+        </div>
+        <div class="hot-indicator" *ngIf="i < 2">HOT</div>
+      </div>
+    </div>
+    
+    <button class="view-all-btn" (click)="navigateToAllCommunities()">
+      <svg width="16" height="16" viewBox="0 0 16 16">
+        <path fill="currentColor" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      </svg>
+      VIEW ALL COMMUNITIES
+    </button>
+  </div>
+
+  <div class="footer">
+    <p>Created by - Sai</p>
+  </div>
+</div>

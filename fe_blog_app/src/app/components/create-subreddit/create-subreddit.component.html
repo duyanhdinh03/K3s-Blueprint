@@ -1,0 +1,73 @@
+<div class="create-subreddit-container">
+  <div class="create-subreddit-card">
+    <h2>Create a community</h2>
+    
+    <form (ngSubmit)="onSubmit()" #subredditForm="ngForm">
+      <div class="form-group">
+        <label for="name">Community name</label>
+        <div class="name-input-wrapper">
+          <span class="prefix">r/</span>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="community_name"
+            [(ngModel)]="subreddit.name"
+            required
+            minlength="3"
+            maxlength="21"
+            pattern="^[a-zA-Z0-9_]+$"
+            class="form-input name-input"
+            #name="ngModel"
+          />
+        </div>
+        <div class="help-text">
+          Community names including capitalization cannot be changed.
+        </div>
+        <div *ngIf="name.invalid && name.touched" class="error-message">
+          <span *ngIf="name.errors?.['required']">Community name is required</span>
+          <span *ngIf="name.errors?.['minlength']">Must be at least 3 characters</span>
+          <span *ngIf="name.errors?.['maxlength']">Cannot exceed 21 characters</span>
+          <span *ngIf="name.errors?.['pattern']">Only letters, numbers, and underscores allowed</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Tell people what this community is about"
+          [(ngModel)]="subreddit.description"
+          required
+          maxlength="500"
+          class="form-textarea"
+          rows="4"
+          #description="ngModel"
+        ></textarea>
+        <div class="char-count">{{ (subreddit.description?.length || 0) }}/500</div>
+        <div *ngIf="description.invalid && description.touched" class="error-message">
+          Description is required
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading || subredditForm.invalid"
+        >
+          <span *ngIf="loading">Creating...</span>
+          <span *ngIf="!loading">Create Community</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<app-header></app-header>
+<div class="main-content">
+  <div class="content-wrapper">
+    <div class="content-container">
+      <app-create-post *ngIf="showCreatePost()"></app-create-post>
+      <router-outlet></router-outlet>
+    </div>
+    <app-sidebar></app-sidebar>
+  </div>
+</div>

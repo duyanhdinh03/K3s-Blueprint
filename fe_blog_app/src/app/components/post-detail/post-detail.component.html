@@ -1,0 +1,194 @@
+<div class="post-detail-page">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <span>Loading post...</span>
+  </div>
+
+  <div *ngIf="!loading && post" class="post-detail">
+    <!-- Main Post -->
+    <div class="post-card detailed">
+      <div class="vote-section">
+        <button class="vote-btn upvote" (click)="upvotePost()">
+          <svg width="20" height="20" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 8 2z"/>
+            <path fill="currentColor" d="M8 2.5L4.5 6h7L8 2.5z"/>
+          </svg>
+        </button>
+        <span class="vote-count large">{{ formatVoteCount(post.voteCount) }}</span>
+        <button class="vote-btn downvote" (click)="downvotePost()">
+          <svg width="20" height="20" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 14a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 1 0v11a.5.5 0 0 1-.5.5z"/>
+            <path fill="currentColor" d="M8 13.5L11.5 10h-7l3.5 3.5z"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="post-content detailed">
+        <div class="post-header">
+          <div class="subreddit-info">
+            <div class="subreddit-icon large">
+              T
+            </div>
+            <div class="subreddit-details">
+              <div class="subreddit-name">r/{{ post.subredditName }}</div>
+              <div class="post-meta">
+                Posted by <span class="author-name">{{ post.authorName }}</span>
+                • {{ getTimeAgo(post.createdDate) }}
+                <span class="hot-badge" *ngIf="isHotPost(post)">HOT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h1 class="post-title detailed">{{ post.title }}</h1>
+
+        <div class="post-body" *ngIf="post.content">
+          <p class="post-text detailed">{{ post.content }}</p>
+        </div>
+
+        <div class="post-image-section" *ngIf="shouldShowImagePlaceholder(post)">
+          <div class="tutorial-preview">
+            <div class="preview-label">Tutorial Screenshot Preview</div>
+            <div class="preview-placeholder">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+              </svg>
+              <span>Tutorial Screenshot Preview</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-actions detailed">
+          <button class="action-btn comments-btn">
+            <svg width="20" height="20" viewBox="0 0 16 16">
+              <path fill="currentColor" d="M8 1C4.1 1 1 3.6 1 6.8c0 1.4.5 2.8 1.3 3.9L1 15l4.3-1.3c.8.2 1.7.3 2.7.3 3.9 0 7-2.6 7-5.8S11.9 1 8 1z"/>
+            </svg>
+            {{ post.commentCount }} Comments
+          </button>
+
+          <button class="action-btn share-btn">
+            <svg width="20" height="20" viewBox="0 0 16 16">
+              <path fill="currentColor" d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-4.492l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+            </svg>
+            Share
+          </button>
+
+          <button class="action-btn save-btn">
+            <svg width="20" height="20" viewBox="0 0 16 16">
+              <path fill="currentColor" d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 8.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5a.5.5 0 0 1 0 1H2z"/>
+            </svg>
+            Save
+          </button>
+
+          <button class="action-btn award-btn">
+            <svg width="20" height="20" viewBox="0 0 16 16">
+              <path fill="currentColor" d="M9.669.864L8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864z"/>
+            </svg>
+            Award
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <!-- Comment Input -->
+      <div class="comment-form" *ngIf="currentUser">
+        <div class="comment-input-wrapper">
+          <div class="user-avatar small">
+            {{ currentUser?.charAt(0)?.toUpperCase() }}
+          </div>
+          <textarea
+            [(ngModel)]="newComment"
+            placeholder="What are your thoughts?"
+            class="comment-input"
+            rows="4"
+          ></textarea>
+        </div>
+        
+        <div class="comment-actions">
+          <button 
+            class="btn btn-primary comment-submit" 
+            (click)="submitComment()"
+            [disabled]="!newComment.trim()"
+          >
+            Comment
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="!currentUser" class="login-prompt">
+        <p>
+          <a routerLink="/login" class="auth-link">Log in</a> or 
+          <a routerLink="/signup" class="auth-link">sign up</a> to leave a comment
+        </p>
+      </div>
+
+      <!-- Comments List -->
+      <div class="comments-list">
+        <div class="comments-header">
+          <h3>{{ comments.length }} {{ comments.length === 1 ? 'Comment' : 'Comments' }}</h3>
+        </div>
+
+        <div *ngFor="let comment of comments; let i = index" class="comment-item">
+          <div class="comment-vote">
+            <button class="vote-btn upvote small">
+              <svg width="12" height="12" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M8 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 8 2z"/>
+                <path fill="currentColor" d="M8 2.5L4.5 6h7L8 2.5z"/>
+              </svg>
+            </button>
+            <span class="vote-count small">{{ getCommentVotes(i) }}</span>
+            <button class="vote-btn downvote small">
+              <svg width="12" height="12" viewBox="0 0 16 16">
+                <path fill="currentColor" d="M8 14a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 1 0v11a.5.5 0 0 1-.5.5z"/>
+                <path fill="currentColor" d="M8 13.5L11.5 10h-7l3.5 3.5z"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="comment-content">
+            <div class="comment-header">
+              <div class="comment-author">{{ comment.authorName }}</div>
+              <div class="comment-time">{{ getTimeAgo(comment.createdDate) }}</div>
+              <button 
+                *ngIf="canDeleteComment(comment)"
+                class="delete-btn"
+                (click)="deleteComment(comment.id)"
+              >
+                Delete
+              </button>
+            </div>
+            
+            <div class="comment-text">
+              {{ comment.content }}
+            </div>
+
+            <div class="comment-actions">
+              <button class="action-btn reply-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16">
+                  <path fill="currentColor" d="M8.5 6.5a.5.5 0 0 1 .5.5v1.5H12a2 2 0 0 1 0 4H9.5a.5.5 0 0 1 0-1H12a1 1 0 0 0 0-2H9a.5.5 0 0 1-.5-.5V7a.5.5 0 0 1 .146-.354l1.5-1.5a.5.5 0 1 1 .708.708l-.647.646H12V6a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                Reply
+              </button>
+              
+              <button class="action-btn award-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16">
+                  <path fill="currentColor" d="M9.669.864L8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864z"/>
+                </svg>
+                Award
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="comments.length === 0" class="no-comments">
+          <div class="no-comments-content">
+            <h4>No Comments Yet</h4>
+            <p>Be the first to share what you think!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

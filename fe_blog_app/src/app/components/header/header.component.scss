@@ -1,0 +1,132 @@
+.header {
+  background: var(--reddit-dark-card);
+  border-bottom: 1px solid var(--reddit-dark-line);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.container {
+  max-width: 1248px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  min-width: 0;
+}
+
+.reddit-logo {
+  color: var(--reddit-orange);
+  display: flex;
+  align-items: center;
+}
+
+.site-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--reddit-dark-text);
+  white-space: nowrap;
+}
+
+.search-section {
+  flex: 1;
+  max-width: 690px;
+  margin: 0 16px;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--reddit-search-bg);
+  border: 1px solid var(--reddit-dark-line);
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 36px;
+}
+
+.search-icon {
+  color: var(--reddit-dark-text-meta);
+  margin-right: 8px;
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--reddit-dark-text);
+  font-size: 14px;
+}
+
+.search-input::placeholder {
+  color: var(--reddit-dark-text-meta);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--reddit-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+}
+
+.username {
+  color: var(--reddit-dark-text);
+  font-size: 12px;
+  font-weight: 400;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .search-section {
+    display: none;
+  }
+  
+  .header-content {
+    gap: 8px;
+  }
+  
+  .site-name {
+    display: none;
+  }
+}

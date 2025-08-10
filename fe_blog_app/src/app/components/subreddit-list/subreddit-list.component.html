@@ -1,0 +1,41 @@
+<div class="subreddit-list-container">
+  <div class="header-section">
+    <h1>Browse Communities</h1>
+    <button 
+      class="btn btn-primary" 
+      (click)="navigateToCreateSubreddit()"
+    >
+      Create Community
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading communities...</div>
+  
+  <div *ngIf="!loading && subreddits.length === 0" class="no-subreddits">
+    No communities found.
+  </div>
+
+  <div class="subreddits-grid">
+    <div 
+      *ngFor="let subreddit of subreddits" 
+      class="subreddit-card"
+      (click)="navigateToSubreddit(subreddit.name)"
+    >
+      <div class="subreddit-header">
+        <div class="subreddit-icon">r/</div>
+        <div class="subreddit-info">
+          <h3 class="subreddit-name">{{ subreddit.name }}</h3>
+          <p class="subreddit-created">Created {{ getTimeAgo(subreddit.createdDate) }}</p>
+        </div>
+      </div>
+      
+      <p class="subreddit-description">
+        {{ subreddit.description }}
+      </p>
+      
+      <div class="subreddit-actions">
+        <button class="btn btn-outline btn-small">Join</button>
+      </div>
+    </div>
+  </div>
+</div>

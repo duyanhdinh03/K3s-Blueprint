@@ -1,0 +1,106 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <div class="signup-header">
+      <h2>Sign Up</h2>
+      <p>Create your Reddit account to start posting and commenting.</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+      <div class="form-group">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username"
+          [(ngModel)]="user.username"
+          required
+          minlength="3"
+          maxlength="20"
+          class="form-input"
+          #username="ngModel"
+        />
+        <div *ngIf="username.invalid && username.touched" class="error-message">
+          <span *ngIf="username.errors?.['required']">Username is required</span>
+          <span *ngIf="username.errors?.['minlength']">Username must be at least 3 characters</span>
+          <span *ngIf="username.errors?.['maxlength']">Username cannot exceed 20 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Email"
+          [(ngModel)]="user.email"
+          required
+          email
+          class="form-input"
+          #email="ngModel"
+        />
+        <div *ngIf="email.invalid && email.touched" class="error-message">
+          <span *ngIf="email.errors?.['required']">Email is required</span>
+          <span *ngIf="email.errors?.['email']">Please enter a valid email</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Password"
+          [(ngModel)]="user.password"
+          required
+          minlength="6"
+          class="form-input"
+          #password="ngModel"
+        />
+        <div *ngIf="password.invalid && password.touched" class="error-message">
+          <span *ngIf="password.errors?.['required']">Password is required</span>
+          <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          [(ngModel)]="confirmPassword"
+          required
+          class="form-input"
+          #confirmPass="ngModel"
+        />
+        <div *ngIf="confirmPass.touched && user.password !== confirmPassword" class="error-message">
+          Passwords do not match
+        </div>
+      </div>
+
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <div *ngIf="success" class="success-message">
+        {{ success }}
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-full"
+        [disabled]="loading || signupForm.invalid || user.password !== confirmPassword"
+      >
+        <span *ngIf="loading">Creating Account...</span>
+        <span *ngIf="!loading">SIGN UP</span>
+      </button>
+    </form>
+
+    <div class="signup-footer">
+      <p>
+        Already have an account? 
+        <a (click)="navigateToLogin()" class="link">LOG IN</a>
+      </p>
+    </div>
+  </div>
+</div>
