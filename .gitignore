@@ -1,0 +1,100 @@
+
+# Node.js/Angular (Frontend)
+
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/*.log
+frontend/npm-debug.log*
+
+ 
+# Java/Maven (Backend)
+ 
+backend/target/
+backend/*.class
+backend/*.jar
+backend/*.war
+backend/*.ear
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+ 
+# Docker
+ 
+*.dockerignore
+Dockerfile.local
+docker-compose.yml.local
+
+ 
+# Terraform
+ 
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform.lock.hcl
+
+ 
+# Vagrant
+ 
+.vagrant/
+Vagrantfile.local
+
+ 
+# Ansible
+ 
+ansible/*.retry
+
+ 
+# Jenkins
+ 
+jenkins_home/
+*.jpi
+*.hpi
+
+ 
+# Helm Charts
+ 
+helm-charts/myapp/charts/
+helm-charts/myapp/Chart.lock
+
+ 
+# Prometheus/Grafana
+ 
+prometheus/data/
+grafana/data/
+
+ 
+# General
+ 
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS generated files
+*.DS_Store
+*.swp
+*~
+._*
+
+# Editor/IDE
+.vscode/
+.idea/
+*.iml
+
+# Security sensitive files
+/kubeconfig
+/secrets/
+/credentials.json
+*.key
+*.pem
+*.cert
+
+# Log files
+*.log
+logs/
+
+# Temp files
+temp/
+tmp/
